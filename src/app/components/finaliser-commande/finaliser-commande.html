@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">🛒 Finalisation de la commande</h2>
+
+  <!-- Panier vide -->
+  <div *ngIf="!panier?.lignesPanier?.length" class="alert alert-info text-center">
+    Votre panier est vide
+  </div>
+
+  <!-- Panier avec produits -->
+  <div *ngIf="panier?.lignesPanier?.length > 0">
+
+    <div class="card mb-3" *ngFor="let ligne of panier.lignesPanier">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <div>
+          <h5>{{ ligne.produit.nom }}</h5>
+          <p>Prix : {{ ligne.produit.prix }} DT</p>
+          <p>Quantité : {{ ligne.quantite }}</p>
+        </div>
+        <div>
+          <p>Subtotal: {{ ligne.produit.prix * ligne.quantite }} DT</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card mt-4">
+      <div class="card-body d-flex justify-content-between align-items-center">
+        <h5>Total</h5>
+        <h5>{{ getTotal() }} DT</h5>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-end mt-3">
+      <button class="btn btn-success btn-lg" (click)="confirmerCommande()">
+        Confirmer la commande
+      </button>
+    </div>
+
+  </div>
+</div>

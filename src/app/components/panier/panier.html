@@ -1,0 +1,34 @@
+<div class="container mt-4">
+  <h2>🛒 Mon Panier</h2>
+
+  <ul class="list-group" *ngIf="panier?.lignesPanier?.length">
+    <li *ngFor="let ligne of panier.lignesPanier" class="list-group-item d-flex justify-content-between align-items-center">
+
+      <div>
+        <h5>{{ ligne.produit.nom }}</h5>
+        <p>Prix : {{ ligne.produit.prix }} DT</p>
+        <p>Quantité : {{ ligne.quantite }}</p>
+      </div>
+
+      <div class="btn-group">
+        <button class="btn btn-sm btn-secondary" (click)="decreaseProduit(ligne.produit)">-</button>
+        <button class="btn btn-sm btn-success" (click)="addProduit(ligne.produit)">+</button>
+        <button class="btn btn-sm btn-danger" (click)="removeProduit(ligne.produit)">Supprimer</button>
+      </div>
+
+      <div>
+        <p>Subtotal: {{ ligne.produit.prix * ligne.quantite }} DT</p>
+      </div>
+
+    </li>
+  </ul>
+
+  <div *ngIf="!panier?.lignesPanier?.length" class="alert alert-info mt-3">
+    Panier vide 🛒
+  </div>
+
+  <div class="mt-3 d-flex justify-content-end">
+    <h5>Total: {{ getTotal() }} DT</h5>
+    <button class="btn btn-primary ms-3" (click)="commander()">Commander</button>
+  </div>
+</div>

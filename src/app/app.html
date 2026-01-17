@@ -1,0 +1,67 @@
+<nav class="navbar navbar-expand navbar-dark bg-dark p-2 mb-3">
+  <a class="navbar-brand ms-2" routerLink="/categories">
+    🛍️ BeautyShop
+  </a>
+
+  <div class="navbar-nav me-auto">
+
+    <a class="nav-link" routerLink="/categories" routerLinkActive="active">
+      📂 Catégories
+    </a>
+
+    <a class="nav-link" routerLink="/produits" routerLinkActive="active">
+      🛍️ Produits
+    </a>
+
+    <a class="nav-link" routerLink="/panier" routerLinkActive="active">
+      🛒 Panier
+    </a>
+
+    <!-- 👤 UTILISATEUR -->
+    <a class="nav-link" *ngIf="isLoggedIn() && !isAdmin()" routerLink="/mes-commandes">
+  📦 Mes commandes
+</a>
+
+
+    <!-- 👑 ADMIN -->
+    <a
+      class="nav-link"
+      *ngIf="isAdmin()"
+      routerLink="/commandes"
+      routerLinkActive="active">
+      📊 Commandes
+    </a>
+
+  </div>
+
+  <!-- AUTH -->
+  <div class="navbar-nav">
+
+    <a
+      class="nav-link"
+      *ngIf="!isLoggedIn()"
+      routerLink="/auth">
+      🔐 Connexion
+    </a>
+
+    <a
+      class="nav-link"
+      *ngIf="!isLoggedIn()"
+      routerLink="/register">
+      ✍️ Inscription
+    </a>
+
+    <a
+      class="nav-link text-warning"
+      *ngIf="isLoggedIn()"
+      (click)="logout()"
+      style="cursor:pointer">
+      🚪 Déconnexion
+    </a>
+
+  </div>
+</nav>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

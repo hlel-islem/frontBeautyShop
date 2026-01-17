@@ -1,0 +1,39 @@
+<div class="container mt-4">
+  <h2 class="text-center mb-4">📦 Mes commandes</h2>
+
+  <div *ngIf="commandes.length === 0" class="alert alert-info text-center">
+    Aucune commande trouvée
+  </div>
+
+  <div *ngFor="let c of commandes" class="card mb-3">
+    <div class="card-body d-flex justify-content-between">
+      <div>
+        <h5>Commande #{{ c.id }}</h5>
+        <p>Date : {{ c.dateCommande | date:'dd/MM/yyyy' }}</p>
+        <p>Total : {{ c.total }} DT</p> <!-- 🔹 total exact en base -->
+        <p>Statut : {{ c.statut }}</p>
+      </div>
+
+      <button class="btn btn-primary btn-sm" (click)="voirProduits(c)">
+        Voir produits
+      </button>
+    </div>
+
+    <div *ngIf="selectedCommande?.id === c.id" class="card-body bg-light">
+      <ul class="list-group">
+        <li *ngFor="let l of c.lignesCommande"
+            class="list-group-item d-flex justify-content-between">
+          <span>{{ l.produit.nom }}</span>
+          <span>
+            {{ l.quantite }} × {{ l.prixUnitaire }} =
+            {{ l.quantite * l.prixUnitaire }} DT
+          </span>
+        </li>
+      </ul>
+
+      <button class="btn btn-secondary btn-sm mt-2" (click)="fermerDetails()">
+        Fermer
+      </button>
+    </div>
+  </div>
+</div>

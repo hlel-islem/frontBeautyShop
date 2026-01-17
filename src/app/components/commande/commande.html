@@ -1,0 +1,29 @@
+<div class="container mt-4">
+  <h3>📦 Suivi des Commandes</h3>
+
+  <p *ngIf="loading">Chargement des commandes...</p>
+  <p *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <table class="table table-bordered" *ngIf="!loading && commandes.length > 0">
+    <thead class="table-dark">
+      <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Total</th>
+        <th>Statut</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let c of commandes; trackBy: trackById">
+        <td>{{ c.id }}</td>
+        <td>{{ c.dateCommande }}</td>
+        <td>{{ c.total }} DT</td>
+        <td>{{ c.statut }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="!loading && (!commandes || commandes.length === 0)">
+    Aucune commande trouvée.
+  </p>
+</div>
