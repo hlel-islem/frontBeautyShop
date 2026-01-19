@@ -1,36 +1,45 @@
-<h2 class="mb-4 text-center">Gestion des catégories</h2>
+<div class="categories-container container mt-4">
 
-<!-- Formulaire ajout/modif visible seulement pour admin -->
-<div *ngIf="isAdmin()" class="mb-3 d-flex gap-2">
-  <input [(ngModel)]="categoryName" class="form-control" placeholder="Nouvelle catégorie">
-  <button *ngIf="!editId" class="btn btn-success" (click)="addCategory()">Ajouter</button>
-  <button *ngIf="editId" class="btn btn-primary" (click)="updateCategory()">Enregistrer</button>
+  <h2 class="mb-4 text-center">🎀 Gestion des catégories</h2>
+
+  <!-- FORMULAIRE AJOUT / MODIF (admin seulement) -->
+  <div *ngIf="isAdmin()" class="mb-3 d-flex gap-2 flex-wrap">
+    <input [(ngModel)]="categoryName" class="form-control form-control-pink" placeholder="Nouvelle catégorie">
+    <button *ngIf="!editId" class="btn btn-success btn-pink" (click)="addCategory()">Ajouter</button>
+    <button *ngIf="editId" class="btn btn-primary btn-pink" (click)="updateCategory()">Enregistrer</button>
+  </div>
+
+  <!-- LISTE DES CATEGORIES -->
+  <ul class="list-group">
+    <li *ngFor="let cat of categories"
+        class="list-group-item d-flex flex-column gap-2 p-3 rounded shadow-sm mb-2">
+
+      <div class="d-flex justify-content-between align-items-center">
+
+        <span (click)="selectCategory(cat)" class="category-name">
+          {{ cat.nom }}
+        </span>
+
+        <!-- ACTIONS ADMIN -->
+        <div class="btn-group" *ngIf="isAdmin()">
+          <button class="btn btn-sm btn-outline-primary" (click)="editCategory(cat)">Modifier</button>
+          <button class="btn btn-sm btn-outline-danger" (click)="deleteCategory(cat.id)">Supprimer</button>
+        </div>
+
+      </div>
+
+      <!-- PRODUITS DE LA CATEGORIE -->
+      <ul *ngIf="selectedCategoryId === cat.id && products.length" class="mt-2 list-group list-group-flush rounded">
+        <li *ngFor="let p of products" class="list-group-item bg-light">
+          {{ p.nom }} - {{ p.prix }} DT
+        </li>
+      </ul>
+
+      <p *ngIf="selectedCategoryId === cat.id && products.length === 0" class="mt-2 text-muted">
+        Aucun produit pour cette catégorie.
+      </p>
+
+    </li>
+  </ul>
+
 </div>
-
-<ul class="list-group">
-  <li *ngFor="let cat of categories"
-      class="list-group-item d-flex justify-content-between align-items-center">
-
-    <span (click)="selectCategory(cat)" style="cursor: pointer;">
-      {{ cat.nom }}
-    </span>
-
-    <!-- Actions CRUD visibles seulement pour admin -->
-    <div class="btn-group" *ngIf="isAdmin()">
-      <button class="btn btn-sm btn-primary" (click)="editCategory(cat)">Modifier</button>
-      <button class="btn btn-sm btn-danger" (click)="deleteCategory(cat.id)">Supprimer</button>
-    </div>
-
-    <!-- Liste des produits de cette catégorie -->
-    <ul *ngIf="selectedCategoryId === cat.id && products.length" class="mt-2 list-group list-group-flush">
-      <li *ngFor="let p of products" class="list-group-item">
-        {{ p.nom }} - {{ p.prix }} DT
-      </li>
-    </ul>
-
-    <p *ngIf="selectedCategoryId === cat.id && products.length === 0" class="mt-2">
-      Aucun produit pour cette catégorie.
-    </p>
-
-  </li>
-</ul>

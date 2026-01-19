@@ -1,0 +1,49 @@
+/* Fond rose bébé doux */
+.auth-container {
+  background: #ffe4ec;
+}
+
+/* Carte blanche avec coins arrondis */
+.auth-card {
+  width: 350px;
+  border-radius: 15px;
+  background: #ffffff;
+  border: none;
+}
+
+/* Input avec icône rose */
+.input-group-text {
+  background: #ffb6c1; /* rose clair */
+  color: #fff;
+  border: none;
+  border-radius: 8px 0 0 8px;
+}
+
+/* Input focus */
+.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(255, 182, 193, 0.25);
+  border-color: #ff69b4; /* rose vif */
+}
+
+/* Bouton rose bébé */
+.btn-pink {
+  background-color: #ff69b4; /* rose vif */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.btn-pink:hover {
+  background-color: #ff85b8; /* rose plus doux au hover */
+}
+
+/* Lien rose clair */
+a {
+  color: #ff69b4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

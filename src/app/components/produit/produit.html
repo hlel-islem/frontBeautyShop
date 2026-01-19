@@ -1,20 +1,25 @@
 <div class="container mt-4">
 
-  <h3 class="text-center mb-4">🛍️ Gestion des Produits</h3>
+  <h3 class="text-center mb-4">🎀 Gestion des Produits</h3>
 
   <!-- FORMULAIRE AJOUT / MODIFICATION (admin uniquement) -->
   <form *ngIf="isAdmin()" (ngSubmit)="saveProduit()" class="card card-body mb-4 shadow">
 
     <div class="mb-3">
       <label class="form-label">Nom du produit</label>
-      <input type="text" class="form-control" placeholder="Nom du produit"
+      <input type="text" class="form-control"
              [(ngModel)]="produit.nom" name="nom" required />
     </div>
 
     <div class="mb-3">
       <label class="form-label">Prix</label>
-      <input type="number" class="form-control" placeholder="Prix"
+      <input type="number" class="form-control"
              [(ngModel)]="produit.prix" name="prix" required />
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Image du produit</label>
+      <input type="file" class="form-control" (change)="onFileSelected($event)" />
     </div>
 
     <div class="d-flex gap-2">
@@ -23,34 +28,41 @@
     </div>
   </form>
 
-  <!-- TABLE DES PRODUITS -->
-  <table class="table table-bordered table-striped shadow">
-    <thead class="table-dark">
-      <tr>
-        <th>Nom</th>
-        <th>Prix</th>
-        <th style="width: 200px">Actions</th>
-      </tr>
-    </thead>
+  <!-- AFFICHAGE DES PRODUITS EN GRILLE -->
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+    <div class="col" *ngFor="let p of produits">
+      <div class="card h-100 shadow-sm text-center">
 
-    <tbody>
-      <tr *ngFor="let p of produits">
-        <td>{{ p.nom }}</td>
-        <td>{{ p.prix }} DT</td>
-        <td>
-          <!-- Admin : CRUD complet -->
+        <!-- IMAGE DU PRODUIT PAR ID -->
+        <img
+  [src]="getImage(p)"
+  class="card-img-top"
+  alt="{{ p.nom }}"
+  (error)="onImageError($event)"
+>
+
+
+        <div class="card-body">
+          <h5 class="card-title">{{ p.nom }}</h5>
+          <p class="card-text">{{ p.prix }} DT</p>
+        </div>
+
+        <div class="card-footer d-flex justify-content-between">
+
+          <!-- ADMIN -->
           <div *ngIf="isAdmin()" class="btn-group">
-            <button class="btn btn-warning btn-sm me-1" (click)="editProduit(p)">Modifier</button>
+            <button class="btn btn-warning btn-sm" (click)="editProduit(p)">Modifier</button>
             <button class="btn btn-danger btn-sm" (click)="deleteProduit(p.id)">Supprimer</button>
           </div>
 
-          <!-- Client : ajout au panier -->
+          <!-- CLIENT -->
           <button *ngIf="!isAdmin()" class="btn btn-primary btn-sm" (click)="addToPanier(p)">
-            Ajouter au panier
+            Ajouter
           </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>

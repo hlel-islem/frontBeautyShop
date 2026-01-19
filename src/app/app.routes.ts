@@ -8,6 +8,7 @@ import { CheckoutComponent } from './components/checkout/checkout';
 import { RegisterComponent } from './components/register/register';
 import { FinaliserCommandeComponent } from './components/finaliser-commande/finaliser-commande';
 import { MesCommandesComponent } from './components/mes-commandes/mes-commandes';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard';
 
 export const routes: Routes = [
   { path: 'categories', component: CategoryComponent },
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'finaliser', component: FinaliserCommandeComponent },
   {path: 'mes-commandes',component: MesCommandesComponent},
+  {path: 'admin-dashboard',component: AdminDashboardComponent},
 
-  { path: '', redirectTo: 'categories', pathMatch: 'full' }
+  { path: '', redirectTo: 'produits', pathMatch: 'full' }
 ];

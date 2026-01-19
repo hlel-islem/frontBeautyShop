@@ -1,7 +1,18 @@
 <nav class="navbar navbar-expand navbar-dark bg-dark p-2 mb-3">
-  <a class="navbar-brand ms-2" routerLink="/categories">
-    🛍️ BeautyShop
+
+  <a class="navbar-brand d-flex align-items-center ms-2" routerLink="/categories">
+    <img
+      src="assets/images/logo.png"
+      alt="TrioGlow"
+      width="30"
+      height="30"
+      class="me-2 rounded"
+    />
+    <span class="fw-bold">TrioGlow</span>
   </a>
+
+  <!-- le reste inchangé -->
+
 
   <div class="navbar-nav me-auto">
 
@@ -58,6 +69,12 @@
       style="cursor:pointer">
       🚪 Déconnexion
     </a>
+
+
+    <a class="nav-link" *ngIf="isAdmin()" routerLink="/admin-dashboard">
+  📊 Dashboard
+    </a>
+
 
   </div>
 </nav>

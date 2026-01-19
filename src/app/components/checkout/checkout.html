@@ -1,12 +1,17 @@
-<div class="checkout-container">
-  <h2 class="text-center mb-4">Finaliser la commande</h2>
+<div class="checkout-container d-flex flex-column justify-content-center align-items-center vh-100">
 
-  <p class="text-center">
-    Vous devez vous connecter ou vous inscrire pour continuer.
-  </p>
+  <div class="card p-4 shadow-sm rounded checkout-card text-center">
 
-  <div class="d-flex justify-content-center gap-3 mt-4">
-    <button class="btn btn-primary" (click)="login()">Se connecter</button>
-    <button class="btn btn-secondary" (click)="register()">S’inscrire</button>
+    <h2 class="mb-4">🛒 Finaliser la commande</h2>
+
+    <p class="mb-4">
+      Vous devez vous connecter ou vous inscrire pour continuer.
+    </p>
+
+    <div class="d-flex flex-column flex-md-row justify-content-center gap-3">
+      <button class="btn btn-pink btn-lg" (click)="login()">Se connecter</button>
+      <button class="btn btn-outline-pink btn-lg" (click)="register()">S’inscrire</button>
+    </div>
+
   </div>
 </div>

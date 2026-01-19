@@ -1,0 +1,136 @@
+<div class="container mt-5">
+  <h2 class="text-center mb-5 fw-bold">📊 Dashboard Admin</h2>
+
+  <!-- 🔹 Loading / Erreur -->
+  <div *ngIf="loadingStats || loadingCommandes || loadingProduits" class="text-center mb-3">
+    <div class="spinner-border text-primary" role="status"></div>
+    <span class="ms-2">Chargement...</span>
+  </div>
+  <p *ngIf="!loadingStats && !loadingCommandes && !loadingProduits && errorMessage" class="text-danger text-center">{{ errorMessage }}</p>
+
+  <!-- 🔹 Statistiques commandes -->
+  <div class="row g-4 mb-4" *ngIf="stats && isAdmin">
+    <div class="col-md-3 col-sm-6">
+      <div class="card shadow-sm text-center border-0">
+        <div class="card-body">
+          <h6 class="text-muted">Total commandes</h6>
+          <h3 class="fw-bold">{{ stats.totalCommandes }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <div class="card shadow-sm text-center border-0">
+        <div class="card-body">
+          <h6 class="text-warning fw-bold">En attente</h6>
+          <h3 class="fw-bold">{{ stats.enAttente }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <div class="card shadow-sm text-center border-0">
+        <div class="card-body">
+          <h6 class="text-success fw-bold">Validées</h6>
+          <h3 class="fw-bold">{{ stats.validees }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6">
+      <div class="card shadow-sm text-center border-0 bg-success text-white">
+        <div class="card-body">
+          <h6>Chiffre d'affaire</h6>
+          <h3>{{ stats.chiffreAffaire }} DT</h3>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Graph commandes -->
+  <div class="card shadow-sm mb-5" *ngIf="stats && isAdmin">
+    <div class="card-body">
+      <h5 class="text-center mb-4 fw-bold">📈 Commandes par statut</h5>
+      <canvas #commandesChart style="height: 300px; width: 100%; margin-top: 30px;"></canvas>
+    </div>
+  </div>
+
+  <!-- 🔹 Liste des commandes -->
+  <div class="card shadow-sm mb-5">
+    <div class="card-body">
+      <h5 class="mb-4 fw-bold">{{ isAdmin ? 'Toutes les commandes' : 'Vos commandes' }}</h5>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Utilisateur</th>
+              <th>Date</th>
+              <th>Statut</th>
+              <th *ngIf="isAdmin">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of commandes; trackBy: trackById">
+              <td>{{ c.id }}</td>
+              <td>{{ c.utilisateur?.nom }} {{ c.utilisateur?.prenom }}</td>
+              <td>{{ c.dateCommande | date:'short' }}</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-warning text-dark': c.statut === 'EN_ATTENTE',
+                  'bg-success': c.statut === 'VALIDEE'
+                }">{{ c.statut }}</span>
+              </td>
+              <td *ngIf="isAdmin">
+                <button class="btn btn-success btn-sm" (click)="validerCommande(c.id)" [disabled]="c.statut === 'VALIDEE'">
+                  Valider
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <p *ngIf="commandes.length === 0" class="text-center">Aucune commande disponible</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Stock des produits -->
+  <div class="card shadow-sm mb-5" *ngIf="produits.length > 0 && isAdmin">
+    <div class="card-body">
+      <h5 class="mb-4 fw-bold">📦 Stock des produits</h5>
+      <div class="table-responsive">
+        <table class="table table-hover align-middle">
+          <thead class="table-dark">
+            <tr>
+              <th>ID</th>
+              <th>Nom</th>
+              <th>Marque</th>
+              <th>Prix</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let p of produits; trackBy: trackById">
+              <td>{{ p.id }}</td>
+              <td>{{ p.nom }}</td>
+              <td>{{ p.marque }}</td>
+              <td>{{ p.prix }} DT</td>
+              <td>
+                <span class="badge" [ngClass]="{
+                  'bg-danger': p.stock <= 5,
+                  'bg-warning text-dark': p.stock > 5 && p.stock <= 15,
+                  'bg-success': p.stock > 15
+                }">{{ p.stock }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- 🔹 Graph stock produits -->
+  <div class="card shadow-sm mb-5" *ngIf="produits.length > 0 && isAdmin">
+    <div class="card-body">
+      <h5 class="text-center mb-4 fw-bold">📊 Stock des produits</h5>
+      <canvas #stockChart style="height: 300px; width: 100%;"></canvas>
+    </div>
+  </div>
+</div>

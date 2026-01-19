@@ -1,0 +1,41 @@
+/* Conteneur général */
+.container {
+  background-color: #ffe4ec; /* rose bébé doux */
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Cards statistiques */
+.card.shadow-sm {
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Badges stylisés */
+.badge {
+  border-radius: 8px;
+  padding: 0.4em 0.7em;
+  font-weight: bold;
+}
+
+/* Table headers rose bébé */
+.table-dark {
+  background-color: #ffb6c1 !important; /* rose bébé */
+  color: #fff;
+}
+
+/* Table hover */
+.table-hover tbody tr:hover {
+  background-color: #ffe0eb;
+}
+
+/* Boutons arrondis */
+.btn {
+  border-radius: 8px;
+}
+
+/* Spinner rose */
+.spinner-border.text-primary {
+  color: #ff69b4;
+}

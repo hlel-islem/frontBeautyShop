@@ -1,0 +1,57 @@
+.panier-container {
+  background: #ffe4ec; /* fond rose bébé doux */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+/* Boutons arrondis */
+.btn-pink {
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.btn-pink:hover {
+  background-color: #ff85b8;
+}
+
+/* Liste produits */
+.list-group-item {
+  border-radius: 10px;
+  border: 1px solid #ffd1e3;
+}
+
+/* Shadow léger */
+.shadow-sm {
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* Infos produit */
+.product-info h5 {
+  color: #d63384;
+}
+
+.product-info p {
+  margin: 0;
+  color: #555;
+}
+
+/* Subtotal */
+.subtotal p {
+  color: #ff69b4;
+}
+
+/* Responsive boutons et spacing */
+@media (max-width: 576px) {
+  .btn-group {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .subtotal {
+    text-align: right;
+    margin-top: 10px;
+  }
+}

@@ -7,7 +7,8 @@ import { PanierService } from '../../services/panier-service';
   selector: 'app-panier',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './panier.html'
+  templateUrl: './panier.html',
+  styleUrl: './panier.css',
 })
 export class PanierComponent implements OnInit {
 

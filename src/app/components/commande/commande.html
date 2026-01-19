@@ -1,28 +1,65 @@
 <div class="container mt-4">
   <h3>📦 Suivi des Commandes</h3>
 
+  <!-- Chargement -->
   <p *ngIf="loading">Chargement des commandes...</p>
-  <p *ngIf="errorMessage">{{ errorMessage }}</p>
 
-  <table class="table table-bordered" *ngIf="!loading && commandes.length > 0">
+  <!-- Erreur -->
+  <p *ngIf="errorMessage" class="text-danger">
+    {{ errorMessage }}
+  </p>
+
+  <!-- Tableau commandes -->
+  <table
+    class="table table-bordered"
+    *ngIf="!loading && commandes && commandes.length > 0"
+  >
     <thead class="table-dark">
       <tr>
         <th>ID</th>
         <th>Date</th>
         <th>Total</th>
         <th>Statut</th>
+
+        <!-- Actions ADMIN -->
+        <th *ngIf="isAdmin">Actions</th>
       </tr>
     </thead>
+
     <tbody>
       <tr *ngFor="let c of commandes; trackBy: trackById">
         <td>{{ c.id }}</td>
         <td>{{ c.dateCommande }}</td>
         <td>{{ c.total }} DT</td>
-        <td>{{ c.statut }}</td>
+
+        <td>
+          <span
+            class="badge"
+            [ngClass]="{
+              'bg-warning': c.statut === 'EN_ATTENTE',
+              'bg-success': c.statut === 'VALIDEE',
+              'bg-danger': c.statut === 'REFUSEE'
+            }"
+          >
+            {{ c.statut }}
+          </span>
+        </td>
+
+        <!-- Bouton validation ADMIN -->
+        <td *ngIf="isAdmin">
+          <button
+            class="btn btn-success btn-sm"
+            *ngIf="c.statut === 'EN_ATTENTE'"
+            (click)="validerCommande(c.id)"
+          >
+            Valider
+          </button>
+        </td>
       </tr>
     </tbody>
   </table>
 
+  <!-- Aucune commande -->
   <p *ngIf="!loading && (!commandes || commandes.length === 0)">
     Aucune commande trouvée.
   </p>

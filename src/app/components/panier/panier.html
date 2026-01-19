@@ -1,34 +1,43 @@
-<div class="container mt-4">
-  <h2>🛒 Mon Panier</h2>
+<div class="container mt-4 panier-container">
 
+  <h2 class="mb-4 text-center">🛒 Mon Panier</h2>
+
+  <!-- Liste des produits -->
   <ul class="list-group" *ngIf="panier?.lignesPanier?.length">
-    <li *ngFor="let ligne of panier.lignesPanier" class="list-group-item d-flex justify-content-between align-items-center">
+    <li *ngFor="let ligne of panier.lignesPanier" 
+        class="list-group-item d-flex flex-column flex-md-row justify-content-between align-items-center mb-3 shadow-sm rounded p-3 bg-light">
 
-      <div>
+      <!-- Infos produit -->
+      <div class="product-info mb-2 mb-md-0">
         <h5>{{ ligne.produit.nom }}</h5>
-        <p>Prix : {{ ligne.produit.prix }} DT</p>
-        <p>Quantité : {{ ligne.quantite }}</p>
+        <p class="mb-1">Prix : {{ ligne.produit.prix }} DT</p>
+        <p class="mb-1">Quantité : {{ ligne.quantite }}</p>
       </div>
 
-      <div class="btn-group">
+      <!-- Actions quantité -->
+      <div class="btn-group mb-2 mb-md-0">
         <button class="btn btn-sm btn-secondary" (click)="decreaseProduit(ligne.produit)">-</button>
         <button class="btn btn-sm btn-success" (click)="addProduit(ligne.produit)">+</button>
         <button class="btn btn-sm btn-danger" (click)="removeProduit(ligne.produit)">Supprimer</button>
       </div>
 
-      <div>
-        <p>Subtotal: {{ ligne.produit.prix * ligne.quantite }} DT</p>
+      <!-- Subtotal -->
+      <div class="subtotal">
+        <p class="mb-0 fw-bold">Subtotal: {{ ligne.produit.prix * ligne.quantite }} DT</p>
       </div>
 
     </li>
   </ul>
 
-  <div *ngIf="!panier?.lignesPanier?.length" class="alert alert-info mt-3">
-    Panier vide 🛒
+  <!-- Panier vide -->
+  <div *ngIf="!panier?.lignesPanier?.length" class="alert alert-info mt-3 text-center">
+    🛒 Votre panier est vide !
   </div>
 
-  <div class="mt-3 d-flex justify-content-end">
-    <h5>Total: {{ getTotal() }} DT</h5>
-    <button class="btn btn-primary ms-3" (click)="commander()">Commander</button>
+  <!-- Total et commander -->
+  <div *ngIf="panier?.lignesPanier?.length" class="mt-3 d-flex flex-column flex-md-row justify-content-end align-items-center gap-3">
+    <h5 class="fw-bold">Total: {{ getTotal() }} DT</h5>
+    <button class="btn btn-pink btn-lg" (click)="commander()">Commander</button>
   </div>
+
 </div>

@@ -1,0 +1,48 @@
+.register-container {
+  background: #ffe4ec; /* fond rose bébé */
+  padding: 20px;
+}
+
+/* Carte blanche */
+.register-card {
+  width: 350px;
+  background: #ffffff;
+  border-radius: 15px;
+  border: none;
+}
+
+/* Inputs rose bébé */
+.form-control-pink {
+  border-radius: 8px;
+  border: 1px solid #ffb6c1;
+  padding: 0.5rem 1rem;
+}
+
+.form-control-pink:focus {
+  border-color: #ff69b4;
+  box-shadow: 0 0 0 0.2rem rgba(255,105,180,0.25);
+}
+
+/* Bouton rose bébé */
+.btn-pink {
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-pink:hover {
+  background-color: #ff85b8;
+}
+
+/* Lien de connexion */
+a {
+  color: #ff69b4;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}

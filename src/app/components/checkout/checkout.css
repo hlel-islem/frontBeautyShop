@@ -1,0 +1,57 @@
+.checkout-container {
+  background: #ffe4ec; /* fond rose bébé */
+  padding: 20px;
+}
+
+/* Carte blanche */
+.checkout-card {
+  width: 350px;
+  background: #ffffff;
+  border-radius: 15px;
+  border: none;
+}
+
+/* Bouton rose bébé plein */
+.btn-pink {
+  background-color: #ff69b4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-pink:hover {
+  background-color: #ff85b8;
+}
+
+/* Bouton rose bébé outline */
+.btn-outline-pink {
+  background-color: transparent;
+  color: #ff69b4;
+  border: 2px solid #ff69b4;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn-outline-pink:hover {
+  background-color: #ff69b4;
+  color: white;
+}
+
+/* Texte et alignement */
+.checkout-card h2 {
+  color: #d63384;
+}
+
+.checkout-card p {
+  color: #555;
+}
+
+/* Responsive petits écrans */
+@media (max-width: 576px) {
+  .d-flex.flex-md-row {
+    flex-direction: column !important;
+  }
+}

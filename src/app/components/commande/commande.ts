@@ -11,16 +11,41 @@ import { CommandeService } from '../../services/commande-service';
 export class CommandeComponent implements OnInit {
 
   commandes: any[] = [];
-  loading = true; // pour indiquer le chargement
-  errorMessage = ''; // pour afficher les erreurs
+  loading = true;
+  errorMessage = '';
+  isAdmin = false;
+
   private commandeService = inject(CommandeService);
 
   ngOnInit(): void {
-  const role = localStorage.getItem('role');
+    const role = localStorage.getItem('role');
+    this.isAdmin = role === 'ADMIN';
 
-  if (role === 'ADMIN') {
-    // 🔹 Lister toutes les commandes
-    this.commandeService.getAll().subscribe({
+    // 🔹 ADMIN : toutes les commandes
+    if (this.isAdmin) {
+      this.commandeService.getAll().subscribe({
+        next: res => {
+          this.commandes = res;
+          this.loading = false;
+        },
+        error: err => {
+          console.error(err);
+          this.errorMessage = "Impossible de charger les commandes";
+          this.loading = false;
+        }
+      });
+      return;
+    }
+
+    // 🔹 Utilisateur normal
+    const userId = Number(localStorage.getItem('userId'));
+    if (!userId) {
+      this.errorMessage = "Utilisateur non connecté";
+      this.loading = false;
+      return;
+    }
+
+    this.commandeService.getByUtilisateur(userId).subscribe({
       next: res => {
         this.commandes = res;
         this.loading = false;
@@ -31,30 +56,25 @@ export class CommandeComponent implements OnInit {
         this.loading = false;
       }
     });
-    return;
   }
 
-  // 🔹 Utilisateur normal
-  const userId = Number(localStorage.getItem('userId'));
-  if (!userId) {
-    this.errorMessage = "Utilisateur non connecté";
-    this.loading = false;
-    return;
+  // 🔹 Validation commande ADMIN
+  validerCommande(id: number): void {
+    if (!confirm("Valider cette commande ?")) return;
+
+    this.commandeService.validerCommandeAdmin(id).subscribe({
+      next: () => {
+        const cmd = this.commandes.find(c => c.id === id);
+        if (cmd) {
+          cmd.statut = 'VALIDEE';
+        }
+      },
+      error: err => {
+        console.error(err);
+        alert("Erreur lors de la validation de la commande");
+      }
+    });
   }
-
-  this.commandeService.getByUtilisateur(userId).subscribe({
-    next: res => {
-      this.commandes = res;
-      this.loading = false;
-    },
-    error: err => {
-      console.error(err);
-      this.errorMessage = "Impossible de charger les commandes";
-      this.loading = false;
-    }
-  });
-}
-
 
   trackById(index: number, item: any) {
     return item.id;

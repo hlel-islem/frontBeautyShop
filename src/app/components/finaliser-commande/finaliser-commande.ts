@@ -15,10 +15,10 @@ export class FinaliserCommandeComponent implements OnInit {
   panier: any = { lignesPanier: [], total: 0 };
   utilisateurId: number | null = null;
 
-  panierService = inject(PanierService);
-  router = inject(Router);
+  private panierService = inject(PanierService);
+  private router = inject(Router);
 
-  ngOnInit() {
+  ngOnInit(): void {
     const userId = localStorage.getItem('userId');
     this.utilisateurId = userId ? Number(userId) : null;
 
@@ -28,14 +28,29 @@ export class FinaliserCommandeComponent implements OnInit {
       return;
     }
 
-    // Charger le panier local pour affichage
+    // 🔹 Charger le panier local pour affichage
     const local = localStorage.getItem('panierFinaliser');
     if (local) {
-      this.panier = JSON.parse(local);
-    }
+  this.panier = JSON.parse(local);
+  this.panier.total = this.getTotal();
+}
+
   }
 
-  confirmerCommande() {
+  // 🔹 Calcul du total (affichage uniquement)
+  getTotal(): number {
+    if (!this.panier?.lignesPanier) return 0;
+
+    return this.panier.lignesPanier.reduce(
+      (total: number, ligne: any) =>
+        total + ligne.produit.prix * ligne.quantite,
+      0
+    );
+  }
+
+  // 🔹 Confirmation de la commande
+  confirmerCommande(): void {
+
     if (!this.panier?.lignesPanier?.length) {
       alert("Votre panier est vide !");
       return;
@@ -49,15 +64,19 @@ export class FinaliserCommandeComponent implements OnInit {
 
     // 🔹 Récupérer le panier côté serveur pour avoir l'ID correct
     this.panierService.getByUtilisateur(this.utilisateurId).subscribe({
-      next: (panierServeur) => {
-        this.panier.id = panierServeur.id;
+      next: (panierServeur: any) => {
+
+        const panierId = panierServeur.id;
 
         // 🔹 Confirmer la commande côté serveur
-        this.panierService.commanderPanier(this.panier.id).subscribe({
-          next: (commandeConfirmée) => {
-            alert(`Commande confirmée avec succès ! Total : ${commandeConfirmée.total} DT`);
+        this.panierService.commanderPanier(panierId).subscribe({
+          next: (commandeConfirmee: any) => {
+            alert(`Commande confirmée avec succès !`);
+
+
             localStorage.removeItem('panier');
             localStorage.removeItem('panierFinaliser');
+
             this.router.navigate(['/categories']);
           },
           error: err => {

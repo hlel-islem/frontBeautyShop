@@ -27,4 +27,12 @@ export class CommandeService {
   return this.http.get<any[]>(`${this.api}/all`);
 }
 
+validerCommandeAdmin(id: number) {
+  return this.http.put(
+    `${this.api}/admin/valider/${id}`,
+    {}
+  );
+}
+
+
 }
